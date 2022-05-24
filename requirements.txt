@@ -1,0 +1,7 @@
+uvicorn
+fastapi
+numpy
+scikit-learn
+pandas
+bangla-stemmer
+nltk
