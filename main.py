@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from hate_detection import schemas
+import schemas
 import nltk
 import re
 from nltk.tokenize import word_tokenize
@@ -9,7 +9,7 @@ nltk.download('punkt')
 nltk.download('stopwords')
 from bangla_stemmer.stemmer import stemmer
 import joblib
-
+import uvicorn
 
 # instances
 stmr = stemmer.BanglaStemmer()
@@ -60,9 +60,11 @@ def make_prediction(request: schemas.Comment):
     text_vec = vector.transform(comment)
 
     prediction = model.predict(text_vec)
-    print(prediction[0])
-
+    #print(prediction[0])
     if prediction[0] == 1:
         return 'Hateful Comment - class: 1'
     else:
         return 'Non Hate Comment - class: 0'
+
+if __name__ == '__main__':
+    uvicorn.run(app, host='127.0.0.1', port=8000)
